@@ -75,7 +75,6 @@ body {
 .hud-value.accent { color: var(--accent); }
 .hud-value.danger { color: var(--danger); }
 
-/* ---------- Canvas ---------- */
 
 #canvas {
     flex: 1;
@@ -86,4 +85,35 @@ body {
     border-radius: 16px;
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
     min-height: 0;
+}
+
+buffer {
+    padding: 14px 8px 0;
+    font-size: 1.05rem;
+    color: var(--sub);
+    text-align: center;
+    letter-spacing: 1px;
+    min-height: 2.2em;
+}
+
+.buffer span.typed {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 10, 16, 0.82);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 24px;
+}
+
+.overlay[hidden] {
+    display: none;
 }
