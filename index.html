@@ -38,3 +38,43 @@
     <div class="overlay" id="start-screen">
         <div class="overlay-card">
             <div class="title">ASTRO <span class="accent">TYPE</span></div>
+             <p class="subtitle">Asteroids are falling on your ship. Destroy them by typing their words before they hit.</p>
+            
+            <div class="difficulty-select">
+                <span class="diff-label">Difficulty</span>
+                <div class="diff-btns">
+                    <button class="diff-btn" data-diff="easy">Easy</button>
+                    <button class="diff-btn active" data-diff="medium">Medium</button>
+                    <button class="diff-btn" data-diff="hard">Hard</button>
+                </div>
+            </div>
+
+            <button id="start-btn" class="btn btn-primary">Launch</button>
+            <p class="hint">or press any key</p>
+        </div>
+    </div>
+
+    <div class="overlay" id="gameover-screen" hidden>
+        <div class="overlay-card">
+            <div class="title">GAME OVER</div>
+            <div class="results-grid">
+                <div>
+                    <span class="r-label">Score</span>
+                    <span class="r-value" id="final-score">0</span>
+                </div>
+                <div>
+                    <span class="r-label">WPM</span>
+                    <span class="r-value" id="final-wpm">0</span>
+                </div>
+                <div>
+                    <span class="r-label">Accuracy</span>
+                    <span class="r-value" id="final-acc">0%</span>
+                </div>
+                <div>
+                    <span class="r-label">Level</span>
+                    <span class="r-value" id="final-level">1</span>
+                </div>
+                <div>
+                    <span class="r-label">Max Combo</span>
+                    <span class="r-value" id="final-combo">0</span>
+                </div>
