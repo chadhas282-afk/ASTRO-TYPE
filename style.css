@@ -1,0 +1,30 @@
+:root {
+    --bg: #0a0c12;
+    --surface: #131722;
+    --surface-2: #1a1f2e;
+    --border: #252c40;
+    --text: #e3e6ee;
+    --sub: #6b7285;
+    --accent: #e2b714;
+    --accent-glow: rgba(226, 183, 20, 0.4);
+    --danger: #ff5d5d;
+    --danger-glow: rgba(255, 93, 93, 0.35);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
