@@ -87,7 +87,8 @@ body {
     min-height: 0;
 }
 
-buffer {
+
+.buffer {
     padding: 14px 8px 0;
     font-size: 1.05rem;
     color: var(--sub);
