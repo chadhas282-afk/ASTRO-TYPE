@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRO TYPE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game">
+        <div class="hud">
+            <div class="hud-block">
+                <span class="hud-label">score</span>
+                <span class="hud-value" id="score">0</span>
+            </div>
+            <div class="hud-block">
+                <span class="hud-label">level</span>
+                <span class="hud-value" id="level">1</span>
+            </div>
+            <div class="hud-block">
+                <span class="hud-label">combo</span>
+                <span class="hud-value" id="combo">0</span>
+            </div>
+            <div class="hud-block">
+                <span class="hud-label">lives</span>
+                <span class="hud-value" id="lives">&#9829;&#9829;&#9829;</span>
+            </div>
+        </div>
+
+        <canvas id="canvas"></canvas>
+
+        <div class="buffer" id="buffer">type the words on the asteroids</div>
+    </div>
+
+    <div class="overlay" id="start-screen">
+        <div class="overlay-card">
+            <div class="title">ASTRO <span class="accent">TYPE</span></div>
