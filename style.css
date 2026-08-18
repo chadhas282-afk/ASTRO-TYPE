@@ -57,3 +57,33 @@ body {
     align-items: baseline;
     gap: 10px;
 }
+
+.hud-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--sub);
+}
+
+.hud-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.hud-value.accent { color: var(--accent); }
+.hud-value.danger { color: var(--danger); }
+
+/* ---------- Canvas ---------- */
+
+#canvas {
+    flex: 1;
+    width: 100%;
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    min-height: 0;
+}
