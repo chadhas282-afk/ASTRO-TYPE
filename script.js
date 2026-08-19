@@ -518,3 +518,43 @@ function drawAsteroid(a) {
     const x0 = a.x - total / 2;
 
     ctx.fillStyle = WHITE;
+    ctx.fillText(rest, x0 + pw, a.y);
+    ctx.fillStyle = ACCENT;
+    ctx.fillText(prefix, x0, a.y);
+
+    if (isActive) {
+        const lineY = a.y + ctx.measureText(prefix).width * 0 + 12;
+        ctx.strokeStyle = ACCENT;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x0, lineY + a.r * 0.28);
+        ctx.lineTo(x0 + total, lineY + a.r * 0.28);
+        ctx.stroke();
+    }
+}
+
+function drawShip(time) {
+    const y = H - 58;
+    const flameLen = 16 + Math.sin(time * 0.02) * 6 + Math.random() * 4;
+
+    ctx.save();
+    ctx.translate(shipX, y);
+
+    ctx.fillStyle = "rgba(226,183,20,0.35)";
+    ctx.beginPath();
+    ctx.moveTo(-7, 18);
+    ctx.lineTo(7, 18);
+    ctx.lineTo(0, 18 + flameLen);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = "#3a4260";
+    ctx.beginPath();
+    ctx.moveTo(0, -22);
+    ctx.lineTo(-20, 20);
+    ctx.lineTo(20, 20);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = "#5b6aa0";
+    ctx.lineWidth = 2;
+    ctx.stroke();
