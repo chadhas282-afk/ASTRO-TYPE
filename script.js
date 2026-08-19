@@ -198,3 +198,43 @@ function drawShots() {
         ctx.moveTo(s.x, s.y);
         ctx.lineTo(cx, cy);
         ctx.stroke();
+
+        for (const pt of s.trail) {
+            ctx.globalAlpha = pt.life / 0.25;
+            ctx.fillStyle = ACCENT;
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+    }
+    ctx.shadowBlur = 0;
+
+    if (muzzleFlash > 0) {
+        const shipY = H - 58;
+        const alpha = muzzleFlash / 0.12;
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = ACCENT;
+        ctx.shadowColor = ACCENT;
+        ctx.shadowBlur = 24;
+        ctx.beginPath();
+        ctx.moveTo(shipX - 8, shipY + 18);
+        ctx.lineTo(shipX + 8, shipY + 18);
+        ctx.lineTo(shipX, shipY + 18 + 30);
+        ctx.closePath();
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+    }
+}
+
+function shockwave(x, y, color) {
+    particles.push({
+        x: x, y: y,
+        vx: 0, vy: 0,
+        life: 0.6,
+        maxLife: 0.6,
+        r: 0,
+        maxR: 120,
+        color: color,
+        type: "shockwave"
