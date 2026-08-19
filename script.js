@@ -558,3 +558,43 @@ function drawShip(time) {
     ctx.strokeStyle = "#5b6aa0";
     ctx.lineWidth = 2;
     ctx.stroke();
+
+    ctx.fillStyle = ACCENT;
+    ctx.beginPath();
+    ctx.arc(0, -4, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.setLineDash([6, 10]);
+    ctx.strokeStyle = "rgba(107,114,133,0.35)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, H - DAMAGE_LINE_OFFSET);
+    ctx.lineTo(W, H - DAMAGE_LINE_OFFSET);
+    ctx.stroke();
+    ctx.setLineDash([]);
+}
+
+function drawParticles(dt) {
+    for (const p of particles) {
+        if (p.type === "shockwave" || p.type === "levelup") continue;
+        p.life -= dt;
+        if (p.life <= 0) continue;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+        ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    particles = particles.filter((p) => p.life > 0);
+}
+
+function update(dt) {
+    if (state !== "playing") return;
+
+    spawnTimer -= dt;
