@@ -678,3 +678,43 @@ function draw(dt, time) {
         ctx.shadowBlur = 30;
         ctx.fillText("LEVEL " + level, W / 2, H / 2);
         ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+    }
+
+    if (state === "paused") {
+        ctx.globalAlpha = 0.85;
+        ctx.fillStyle = "#0a0c12";
+        ctx.fillRect(0, 0, W, H);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = ACCENT;
+        ctx.font = "800 36px 'JetBrains Mono', monospace";
+        ctx.textAlign = "center";
+        ctx.shadowColor = ACCENT;
+        ctx.shadowBlur = 24;
+        ctx.fillText("PAUSED", W / 2, H / 2 - 20);
+        ctx.font = "600 14px 'JetBrains Mono', monospace";
+        ctx.fillStyle = WHITE;
+        ctx.fillText("Press ESC or SPACE to resume", W / 2, H / 2 + 28);
+        ctx.shadowBlur = 0;
+    }
+
+    ctx.restore();
+}
+
+function loop(time) {
+    const dt = Math.min(0.05, (time - lastTime) / 1000);
+    lastTime = time;
+    update(dt);
+    draw(dt, time);
+    requestAnimationFrame(loop);
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+    if (e.key === "Escape" && state === "playing") {
+        setState("paused");
+        return;
+    }
+    if (state === "paused") {
+        if (e.key === "Escape" || e.key === " ") setState("playing");
