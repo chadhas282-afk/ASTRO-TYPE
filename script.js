@@ -78,7 +78,7 @@ function resize() {
     const h = rect.height - 36 - 90 - 44;
     canvas.width = Math.max(1, w * DPR);
     canvas.height = Math.max(1, h * DPR);
-     canvas.style.width = w + "px";
+    canvas.style.width = w + "px";
     canvas.style.height = h + "px";
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     W = w;
@@ -118,7 +118,7 @@ function spawnAsteroid() {
     const r = 20 + word.length * 5.5;
     asteroids.push({
         x: r + 14 + Math.random() * Math.max(10, W - 2 * r - 28),
-         y: -r,
+        y: -r,
         r: r,
         vy: asteroidSpeed(),
         rot: Math.random() * Math.PI * 2,
@@ -238,7 +238,7 @@ function shockwave(x, y, color) {
         maxR: 120,
         color: color,
         type: "shockwave"
-         });
+    });
 }
 
 function levelUpEffect() {
@@ -358,7 +358,7 @@ function startGame() {
     particles = [];
     spawnWarnings = [];
     spawnTimer = 1.2;
-     keystrokesTotal = 0;
+    keystrokesTotal = 0;
     keystrokesCorrect = 0;
     shake = 0;
     screenFlash = 0;
@@ -638,7 +638,7 @@ function update(dt) {
 }
 
 function draw(dt, time) {
-     ctx.save();
+    ctx.save();
 
     ctx.clearRect(0, 0, W, H);
 
@@ -718,3 +718,47 @@ document.addEventListener("keydown", (e) => {
     }
     if (state === "paused") {
         if (e.key === "Escape" || e.key === " ") setState("playing");
+        return;
+    }
+
+    if (state === "menu") {
+        startGame();
+        return;
+    }
+    if (state === "gameover") {
+        if (e.key === "Enter" || e.key === " ") {
+            startGame();
+        }
+        return;
+    }
+
+    if (e.key.length === 1 || e.key === "Backspace") {
+        if (e.key.length === 1 && /^[a-zA-Z]$/.test(e.key)) {
+            handleTyping(e.key.toLowerCase());
+        } else if (e.key === "Backspace") {
+            handleTyping("Backspace");
+        }
+        e.preventDefault();
+    }
+});
+
+startBtn.addEventListener("click", startGame);
+restartBtn.addEventListener("click", startGame);
+
+diffBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        diffBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        difficulty = btn.dataset.diff;
+    });
+});
+
+window.addEventListener("resize", resize);
+
+resize();
+updateHUD();
+renderBuffer();
+requestAnimationFrame((t) => {
+    lastTime = t;
+    requestAnimationFrame(loop);
+});
