@@ -638,3 +638,43 @@ function update(dt) {
 }
 
 function draw(dt, time) {
+     ctx.save();
+
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.fillStyle = "#131722";
+    ctx.fillRect(0, 0, W, H);
+
+    if (shake > 0.5) {
+        ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
+    }
+
+    drawStars(time);
+
+    for (const a of asteroids) {
+        drawAsteroid(a);
+    }
+
+    drawSpawnWarnings();
+    drawShip(time);
+    drawParticles(dt);
+    drawShots();
+    drawShockwaves();
+
+    if (screenFlash > 0) {
+        ctx.globalAlpha = screenFlash * 0.6;
+        ctx.fillStyle = ACCENT;
+        ctx.fillRect(0, 0, W, H);
+        ctx.globalAlpha = 1;
+    }
+
+    if (levelUpTimer > 0) {
+        const alpha = Math.min(1, levelUpTimer);
+        ctx.globalAlpha = alpha * 0.9;
+        ctx.fillStyle = ACCENT;
+        ctx.font = "800 48px 'JetBrains Mono', monospace";
+        ctx.textAlign = "center";
+        ctx.shadowColor = ACCENT;
+        ctx.shadowBlur = 30;
+        ctx.fillText("LEVEL " + level, W / 2, H / 2);
+        ctx.shadowBlur = 0;
