@@ -318,3 +318,43 @@ function destroyAsteroid(a) {
     score += gained;
     kills++;
     asteroids = asteroids.filter((x) => x !== a);
+    buffer = "";
+    screenFlash = 0.1;
+
+    if (kills % 8 === 0) {
+        level++;
+        levelUpEffect();
+    }
+    updateHUD();
+}
+
+function hitShip() {
+    lives--;
+    shake = 12;
+    if (lives <= 0) {
+        endGame();
+    }
+}
+
+function damageAsteroid(a) {
+    explode(a.x, a.y, DANGER, 16);
+    asteroids = asteroids.filter((x) => x !== a);
+    hitShip();
+}
+
+function setState(s) {
+    state = s;
+}
+
+function startGame() {
+    score = 0;
+    level = 1;
+    lives = 3;
+    kills = 0;
+    combo = 0;
+    maxCombo = 0;
+    buffer = "";
+    asteroids = [];
+    particles = [];
+    spawnWarnings = [];
+    spawnTimer = 1.2;
