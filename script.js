@@ -358,3 +358,43 @@ function startGame() {
     particles = [];
     spawnWarnings = [];
     spawnTimer = 1.2;
+     keystrokesTotal = 0;
+    keystrokesCorrect = 0;
+    shake = 0;
+    screenFlash = 0;
+    levelUpTimer = 0;
+    perfectWord = true;
+    startTime = performance.now();
+
+    startScreen.hidden = true;
+    gameoverScreen.hidden = true;
+    setState("playing");
+
+    updateHUD();
+    renderBuffer();
+}
+
+function endGame() {
+    setState("gameover");
+
+    const elapsed = Math.max((performance.now() - startTime) / 60000, 1 / 60);
+    const wpm = Math.round((keystrokesCorrect / 5) / elapsed);
+    const accuracy = keystrokesTotal > 0 ? Math.round((keystrokesCorrect / keystrokesTotal) * 100) : 100;
+
+    finalScoreEl.textContent = score;
+    finalWpmEl.textContent = wpm;
+    finalAccEl.textContent = accuracy + "%";
+    finalLevelEl.textContent = level;
+    finalComboEl.textContent = maxCombo;
+
+    const best = Math.max(score, Number(localStorage.getItem("astrotype-best") || 0));
+    localStorage.setItem("astrotype-best", best);
+    bestEl.textContent = "Best: " + best;
+
+    gameoverScreen.hidden = false;
+}
+
+function updateHUD() {
+    scoreEl.textContent = score;
+    levelEl.textContent = level;
+    comboEl.textContent = combo;
