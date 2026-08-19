@@ -278,3 +278,43 @@ function drawShockwaves() {
             ctx.shadowBlur = 20;
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+            ctx.globalAlpha = 1;
+        }
+    }
+}
+
+function updateSpawnWarnings(dt) {
+    for (const w of spawnWarnings) w.t -= dt;
+    spawnWarnings = spawnWarnings.filter(w => w.t > 0);
+}
+
+function drawSpawnWarnings() {
+    for (const w of spawnWarnings) {
+        const alpha = Math.min(1, w.t * 2);
+        ctx.globalAlpha = alpha * 0.4;
+        ctx.strokeStyle = DANGER;
+        ctx.lineWidth = 2;
+        ctx.setLineDash([8, 6]);
+        ctx.beginPath();
+        ctx.moveTo(w.x, 0);
+        ctx.lineTo(w.x, 60);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = DANGER;
+        ctx.font = "600 10px 'JetBrains Mono', monospace";
+        ctx.textAlign = "center";
+        ctx.fillText("INCOMING", w.x, 70);
+        ctx.globalAlpha = 1;
+    }
+}
+
+function destroyAsteroid(a) {
+    fireShot(a.x, a.y);
+    explode(a.x, a.y, ACCENT, 22);
+    shockwave(a.x, a.y, ACCENT);
+    const gained = a.word.length * 10;
+    score += gained;
+    kills++;
+    asteroids = asteroids.filter((x) => x !== a);
