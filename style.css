@@ -198,4 +198,43 @@ body {
 .results-grid > div {
     background: var(--surface-2);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    bpadding: 16px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.r-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--sub);
+}
+
+.r-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+}
+
+.best {
+    font-size: 0.8rem;
+    color: var(--sub);
+    margin-bottom: 24px;
+}
+
+
+
+.difficulty-select {
+    margin-bottom: 28px;
+}
+
+.diff-label {
+    display: block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--sub);
+    margin-bottom: 10px;
+}
