@@ -78,3 +78,43 @@ function resize() {
     const h = rect.height - 36 - 90 - 44;
     canvas.width = Math.max(1, w * DPR);
     canvas.height = Math.max(1, h * DPR);
+     canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    W = w;
+    H = h;
+    shipX = W / 2;
+    makeStars();
+}
+
+function makeStars() {
+    stars = [];
+    const count = Math.floor((W * H) / 4500);
+    for (let i = 0; i < count; i++) {
+        stars.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: Math.random() * 1.6 + 0.3,
+            phase: Math.random() * Math.PI * 2,
+            speed: Math.random() * 2 + 1
+        });
+    }
+}
+
+function randomWord() {
+    return WORDS[Math.floor(Math.random() * WORDS.length)];
+}
+
+function spawnInterval() {
+    return Math.max(0.65, 2.4 - (level - 1) * 0.16);
+}
+
+function asteroidSpeed() {
+    return (46 + level * 13) * (0.8 + Math.random() * 0.45) * DIFF_SPEED[difficulty];
+}
+
+function spawnAsteroid() {
+    const word = randomWord();
+    const r = 20 + word.length * 5.5;
+    asteroids.push({
+        x: r + 14 + Math.random() * Math.max(10, W - 2 * r - 28),
