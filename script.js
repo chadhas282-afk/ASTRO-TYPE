@@ -598,3 +598,43 @@ function update(dt) {
     if (state !== "playing") return;
 
     spawnTimer -= dt;
+    if (spawnTimer <= 0) {
+        const x = Math.random() * (W * 0.8) + W * 0.1;
+        spawnWarnings.push({ x: x, t: 0.8 });
+        setTimeout(() => {
+            if (state === "playing") {
+                const word = randomWord();
+                const r = 20 + word.length * 5.5;
+                asteroids.push({
+                    x: x, y: -r, r: r, vy: asteroidSpeed(),
+                    rot: Math.random() * Math.PI * 2,
+                    vr: (Math.random() - 0.5) * 0.04,
+                    wob: Math.random() * Math.PI * 2, word: word,
+                    seed: Math.floor(Math.random() * 1000)
+                });
+            }
+        }, 800);
+        spawnTimer = spawnInterval();
+    }
+
+    const damageLine = H - DAMAGE_LINE_OFFSET;
+    for (const a of asteroids) {
+        a.y += a.vy * dt;
+        a.rot += a.vr * dt;
+        a.wob += dt * 2;
+        if (a.y + a.r >= damageLine) {
+            damageAsteroid(a);
+        }
+    }
+
+    updateShots(dt);
+    updateShockwaves(dt);
+    updateSpawnWarnings(dt);
+
+    if (levelUpTimer > 0) levelUpTimer -= dt;
+    if (screenFlash > 0) screenFlash -= dt;
+    if (wrongFlashTimer > 0) wrongFlashTimer -= dt;
+    if (shake > 0) shake *= Math.pow(0.02, dt);
+}
+
+function draw(dt, time) {
