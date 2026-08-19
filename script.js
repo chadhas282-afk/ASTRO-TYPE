@@ -398,3 +398,43 @@ function updateHUD() {
     scoreEl.textContent = score;
     levelEl.textContent = level;
     comboEl.textContent = combo;
+    livesEl.textContent = "\u2665".repeat(Math.max(0, lives)) + "\u2661".repeat(Math.max(0, 3 - lives));
+}
+
+function renderBuffer() {
+    const active = activeAsteroid();
+    if (state !== "playing") {
+        bufferEl.innerHTML = "type the words on the asteroids";
+        return;
+    }
+    if (buffer.length === 0) {
+        bufferEl.innerHTML = "type the word on an asteroid to fire!";
+        return;
+    }
+    let html = "";
+    for (const ch of buffer) {
+        html += '<span class="typed">' + ch + "</span>";
+    }
+    if (active) {
+        const rest = active.word.slice(buffer.length);
+        html += '<span>' + rest + "</span>";
+    }
+    bufferEl.innerHTML = html;
+}
+
+function handleTyping(key) {
+    if (/^[a-z]$/.test(key)) {
+        keystrokesTotal++;
+        const trial = buffer + key;
+        let best = null;
+        for (const a of asteroids) {
+            if (a.word.startsWith(trial)) {
+                if (!best || a.y > best.y) best = a;
+            }
+        }
+        if (best) {
+            keystrokesCorrect++;
+            buffer = trial;
+            if (buffer === best.word) {
+                if (perfectWord) {
+                    combo++;
