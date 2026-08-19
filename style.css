@@ -158,7 +158,6 @@ body {
 
 .btn {
     display: inline-block;
-     display: inline-block;
     padding: 14px 44px;
     font-size: 0.95rem;
     font-weight: 700;
@@ -198,7 +197,8 @@ body {
 .results-grid > div {
     background: var(--surface-2);
     border: 1px solid var(--border);
-    bpadding: 16px 8px;
+    border-radius: 12px;
+    padding: 16px 8px;
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -237,4 +237,51 @@ body {
     letter-spacing: 2px;
     color: var(--sub);
     margin-bottom: 10px;
+}
+
+.diff-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.diff-btn {
+    padding: 10px 24px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 1px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-2);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-transform: uppercase;
+}
+
+.diff-btn:hover {
+    border-color: var(--accent);
+    background: var(--surface);
+}
+
+.diff-btn.active {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #17130a;
+    box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+@media (max-width: 640px) {
+    #game {
+        padding: 8px 8px 12px;
+    }
+
+    .overlay-card {
+        padding: 32px 24px;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
 }
