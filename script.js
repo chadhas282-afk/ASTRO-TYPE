@@ -37,3 +37,44 @@ const DAMAGE_LINE_OFFSET = 96;
 
 let W = 0;
 let H = 0;
+
+let state = "menu";
+let score = 0;
+let level = 1;
+let lives = 3;
+let kills = 0;
+let buffer = "";
+let spawnTimer = 0;
+let asteroids = [];
+let particles = [];
+let stars = [];
+let shipX = 0;
+let startTime = 0;
+let keystrokesTotal = 0;
+let keystrokesCorrect = 0;
+let shake = 0;
+let lastTime = 0;
+
+let shots = [];
+let muzzleFlash = 0;
+let screenFlash = 0;
+let levelUpTimer = 0;
+let combo = 0;
+let maxCombo = 0;
+let perfectWord = true;
+let spawnWarnings = [];
+
+let difficulty = "medium";
+
+const DIFF_SPEED = {
+    easy: 0.6,
+    medium: 1.0,
+    hard: 1.5
+};
+
+function resize() {
+    const rect = document.getElementById("game").getBoundingClientRect();
+    const w = rect.width - 36;
+    const h = rect.height - 36 - 90 - 44;
+    canvas.width = Math.max(1, w * DPR);
+    canvas.height = Math.max(1, h * DPR);
