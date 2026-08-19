@@ -118,3 +118,43 @@ function spawnAsteroid() {
     const r = 20 + word.length * 5.5;
     asteroids.push({
         x: r + 14 + Math.random() * Math.max(10, W - 2 * r - 28),
+         y: -r,
+        r: r,
+        vy: asteroidSpeed(),
+        rot: Math.random() * Math.PI * 2,
+        vr: (Math.random() - 0.5) * 0.04,
+        wob: Math.random() * Math.PI * 2,
+        word: word,
+        seed: Math.floor(Math.random() * 1000)
+    });
+}
+
+function activeAsteroid() {
+    let best = null;
+    for (const a of asteroids) {
+        if (a.word.startsWith(buffer)) {
+            if (!best || a.y > best.y) best = a;
+        }
+    }
+    return best;
+}
+
+function explode(x, y, color, count) {
+    for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 60 + Math.random() * 260;
+        particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: 0.5 + Math.random() * 0.5,
+            maxLife: 1,
+            r: 1.5 + Math.random() * 3,
+            color: Math.random() < 0.6 ? color : WHITE
+        });
+    }
+}
+
+function fireShot(targetX, targetY) {
+    const shipY = H - 58;
