@@ -438,3 +438,43 @@ function handleTyping(key) {
             if (buffer === best.word) {
                 if (perfectWord) {
                     combo++;
+                    maxCombo = Math.max(maxCombo, combo);
+                } else {
+                    combo = 0;
+                }
+                perfectWord = true;
+                destroyAsteroid(best);
+            }
+        } else {
+            perfectWord = false;
+            triggerWrongFlash();
+        }
+    } else if (key === "Backspace" && buffer.length > 0) {
+        buffer = buffer.slice(0, -1);
+        perfectWord = false;
+    }
+    renderBuffer();
+}
+
+function drawStars(time) {
+    for (const s of stars) {
+        const twinkle = 0.4 + 0.6 * Math.abs(Math.sin(time * 0.001 * s.speed + s.phase));
+        ctx.globalAlpha = twinkle;
+        ctx.fillStyle = WHITE;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+}
+
+let wrongFlashTimer = 0;
+
+function triggerWrongFlash() {
+    wrongFlashTimer = 0.15;
+}
+
+function drawAsteroid(a) {
+    ctx.save();
+    ctx.translate(a.x, a.y);
+    ctx.rotate(a.rot);
