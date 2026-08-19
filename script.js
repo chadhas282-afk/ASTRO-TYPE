@@ -158,3 +158,43 @@ function explode(x, y, color, count) {
 
 function fireShot(targetX, targetY) {
     const shipY = H - 58;
+    shots.push({
+        x: shipX,
+        y: shipY,
+        targetX: targetX,
+        targetY: targetY,
+        life: 0.18,
+        maxLife: 0.18,
+        trail: []
+    });
+    muzzleFlash = 0.12;
+}
+
+function updateShots(dt) {
+    for (const s of shots) {
+        s.life -= dt;
+        const t = 1 - s.life / s.maxLife;
+        s.trail.push({ x: s.x + (s.targetX - s.x) * t, y: s.y + (s.targetY - s.y) * t, life: 0.25 });
+        if (s.trail.length > 12) s.trail.shift();
+        for (const pt of s.trail) pt.life -= dt;
+        s.trail = s.trail.filter(pt => pt.life > 0);
+    }
+    shots = shots.filter(s => s.life > 0);
+
+    if (muzzleFlash > 0) muzzleFlash -= dt;
+}
+
+function drawShots() {
+    for (const s of shots) {
+        const t = 1 - s.life / s.maxLife;
+        const cx = s.x + (s.targetX - s.x) * t;
+        const cy = s.y + (s.targetY - s.y) * t;
+
+        ctx.strokeStyle = ACCENT;
+        ctx.lineWidth = 3;
+        ctx.shadowColor = ACCENT;
+        ctx.shadowBlur = 18;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(cx, cy);
+        ctx.stroke();
