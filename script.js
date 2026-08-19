@@ -238,3 +238,43 @@ function shockwave(x, y, color) {
         maxR: 120,
         color: color,
         type: "shockwave"
+         });
+}
+
+function levelUpEffect() {
+    levelUpTimer = 1.5;
+    for (let i = 0; i < 30; i++) {
+        const angle = (i / 30) * Math.PI * 2;
+        particles.push({
+            x: W / 2, y: H - 58,
+            vx: Math.cos(angle) * (200 + Math.random() * 100),
+            vy: Math.sin(angle) * (200 + Math.random() * 100),
+            life: 1.2, maxLife: 1.2,
+            r: 3 + Math.random() * 3,
+            color: Math.random() < 0.5 ? ACCENT : "#ffd700",
+            type: "levelup"
+        });
+    }
+    screenFlash = 0.3;
+}
+
+function updateShockwaves(dt) {
+    for (const p of particles) {
+        if (p.type === "shockwave") {
+            p.life -= dt;
+            p.r = p.maxR * (1 - p.life / p.maxLife);
+        }
+    }
+}
+
+function drawShockwaves() {
+    for (const p of particles) {
+        if (p.type === "shockwave" && p.life > 0) {
+            const alpha = p.life / p.maxLife;
+            ctx.globalAlpha = alpha * 0.6;
+            ctx.strokeStyle = p.color;
+            ctx.lineWidth = 3;
+            ctx.shadowColor = p.color;
+            ctx.shadowBlur = 20;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
