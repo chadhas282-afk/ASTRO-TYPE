@@ -478,3 +478,43 @@ function drawAsteroid(a) {
     ctx.save();
     ctx.translate(a.x, a.y);
     ctx.rotate(a.rot);
+
+    const n = 9;
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+        const angle = (i / n) * Math.PI * 2;
+        const rr = a.r * (0.78 + 0.22 * Math.sin(a.seed + i * 1.7 + a.wob));
+        const px = Math.cos(angle) * rr;
+        const py = Math.sin(angle) * rr;
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    
+    const isActive = a === activeAsteroid();
+    if (isActive && wrongFlashTimer > 0) {
+        ctx.fillStyle = "rgba(255, 93, 93, 0.4)";
+        ctx.shadowColor = DANGER;
+        ctx.shadowBlur = 20;
+    } else {
+        ctx.fillStyle = "#232a3d";
+    }
+    ctx.fill();
+    ctx.strokeStyle = "#3a4260";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    ctx.restore();
+
+    const progress = isActive ? buffer.length : 0;
+    const prefix = a.word.slice(0, progress);
+    const rest = a.word.slice(progress);
+    ctx.font = '600 ' + Math.min(19, a.r * 0.62) + 'px "JetBrains Mono", monospace';
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    const pw = ctx.measureText(prefix).width;
+    const rw = ctx.measureText(rest).width;
+    const total = pw + rw;
+    const x0 = a.x - total / 2;
+
+    ctx.fillStyle = WHITE;
